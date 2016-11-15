@@ -74,8 +74,20 @@ createPerson = function (id, name) {
     });
 }
 
+createPersonAlt = function (id, name) {
+    // make undo-able and create by calling redo()
+    undoManager.addAndDo({
+        undo: function() {
+            removePerson(id)
+        },
+        redo: function() {
+            addPerson(id, name);
+        }
+    });
+}
+
 createPerson(101, "John");
-createPerson(102, "Mary");
+createPersonAlt(102, "Mary");
 
 console.log("people", people); // {101: "John", 102: "Mary"}
 
